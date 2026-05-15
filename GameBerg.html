@@ -1,0 +1,104 @@
+import streamlit as st
+
+st.set_page_config(
+    page_title="Domingo a Noite Sofrendo",
+    page_icon="🎵",
+    layout="centered",
+)
+
+st.components.v1.html("""
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #06060f; font-family: 'Courier New', monospace; color: #e0e0ff; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+  .lp { width: 100%; max-width: 640px; }
+  .hero { background: #0a0a1a; border: 0.5px solid #2a2a4a; border-radius: 16px; padding: 3rem 2rem 2rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #3cffff, #f0a0f0, #ffb400, #3cffff); background-size: 200%; animation: slide 3s linear infinite; }
+  @keyframes slide { to { background-position: 200% center; } }
+  .title { font-size: 28px; font-weight: 700; letter-spacing: 2px; color: #ffffff; line-height: 1.2; }
+  .title span { color: #3cffff; }
+  .subtitle { margin-top: 8px; font-size: 13px; color: #8888aa; letter-spacing: 1px; }
+  .cta-btn { display: inline-block; margin-top: 1.5rem; padding: 12px 32px; background: #ff4b4b; color: white; font-family: 'Courier New', monospace; font-weight: 700; font-size: 15px; border-radius: 8px; border: none; cursor: pointer; letter-spacing: 1px; transition: background 0.2s, transform 0.1s; text-decoration: none; }
+  .cta-btn:hover { background: #ff3333; transform: scale(1.03); }
+  .demo-area { background: #0e0e22; border: 1px solid #2a2a4a; border-radius: 12px; margin-top: 1.5rem; padding: 1.5rem 1rem; position: relative; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+  .demo-label { font-size: 11px; color: #555577; letter-spacing: 2px; position: absolute; top: 10px; left: 14px; }
+  .setas { display: flex; gap: 8px; }
+  .seta { width: 52px; height: 120px; border-radius: 8px; border: 1.5px solid; position: relative; display: flex; flex-direction: column-reverse; align-items: center; padding-bottom: 8px; overflow: hidden; }
+  .seta-0 { border-color: #ffffff22; background: #141428; }
+  .seta-1 { border-color: #ffa03244; background: #141420; }
+  .seta-2 { border-color: #3cffff44; background: #0e141a; }
+  .seta-3 { border-color: #f0a0f044; background: #16101a; }
+  .hit-btn { width: 44px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; flex-shrink: 0; }
+  .hit-0 { background: #3c3c50; color: #ffffff; }
+  .hit-1 { background: #3c3020; color: #ffa032; }
+  .hit-2 { background: #0e2a2a; color: #3cffff; }
+  .hit-3 { background: #2a1a2a; color: #f0a0f0; }
+  .note { width: 44px; height: 18px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.4); position: absolute; animation: fall linear infinite; }
+  .note-0 { background: #ffffff; top: 0; animation-duration: 1.8s; animation-delay: 0.3s; }
+  .note-1 { background: #ffa032; top: 0; animation-duration: 2.1s; animation-delay: 0.9s; }
+  .note-2 { background: #3cffff; top: 0; animation-duration: 1.5s; animation-delay: 0.1s; }
+  .note-3 { background: #f0a0f0; top: 0; animation-duration: 1.9s; animation-delay: 0.6s; }
+  @keyframes fall { 0% { top: -20px; opacity: 1; } 85% { opacity: 1; } 100% { top: 90px; opacity: 0; } }
+  .score-display { font-size: 13px; color: #ffb400; letter-spacing: 2px; }
+  .combo-display { font-size: 11px; color: #8888aa; }
+  .section { background: #0a0a1a; border: 0.5px solid #2a2a4a; border-radius: 12px; padding: 1.5rem; margin-top: 12px; }
+  .section-title { font-size: 12px; color: #555577; letter-spacing: 2px; margin-bottom: 1rem; }
+  .controls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ctrl { background: #0e0e22; border: 0.5px solid #2a2a4a; border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; }
+  .key { background: #2a2a4a; border: 1px solid #444466; border-radius: 5px; padding: 3px 8px; font-size: 12px; color: #ffffff; font-family: 'Courier New', monospace; min-width: 32px; text-align: center; }
+  .ctrl-desc { font-size: 12px; color: #8888aa; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+  .tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 0.5px solid; }
+  .tag-cyan { border-color: #3cffff44; color: #3cffff; background: #0e1a1a; }
+  .tag-purple { border-color: #a0a0f044; color: #a0a0f0; background: #12121e; }
+  .tag-yellow { border-color: #ffb40044; color: #ffb400; background: #1a1400; }
+</style>
+</head>
+<body>
+<div class="lp">
+  <div class="hero">
+    <div class="title">DOMINGO A NOITE<br><span>SOFRENDO</span></div>
+    <div class="subtitle">rhythm game • acerte as notas • não perca o ritmo</div>
+    <a class="cta-btn" href="https://domingo-a-noite-sofrendo.streamlit.app/" target="_blank">JOGAR AGORA</a>
+    <div class="demo-area">
+      <div class="demo-label">PREVIEW</div>
+      <div class="score-display">SCORE: 00012800</div>
+      <div class="setas">
+        <div class="seta seta-0"><div class="hit-btn hit-0">◄</div><div class="note note-0"></div></div>
+        <div class="seta seta-1"><div class="hit-btn hit-1">▼</div><div class="note note-1"></div></div>
+        <div class="seta seta-2"><div class="hit-btn hit-2">▲</div><div class="note note-2"></div></div>
+        <div class="seta seta-3"><div class="hit-btn hit-3">►</div><div class="note note-3"></div></div>
+      </div>
+      <div class="combo-display">4x COMBO • PERFECT</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">CONTROLES</div>
+    <div class="controls-grid">
+      <div class="ctrl"><span class="key">◄</span><span class="ctrl-desc">ou <span class="key" style="font-size:11px">A</span> — seta esquerda</span></div>
+      <div class="ctrl"><span class="key">▼</span><span class="ctrl-desc">ou <span class="key" style="font-size:11px">S</span> — seta baixo</span></div>
+      <div class="ctrl"><span class="key">▲</span><span class="ctrl-desc">ou <span class="key" style="font-size:11px">J</span> — seta cima</span></div>
+      <div class="ctrl"><span class="key">►</span><span class="ctrl-desc">ou <span class="key" style="font-size:11px">K</span> — seta direita</span></div>
+    </div>
+    <div class="ctrl" style="margin-top:10px"><span class="key">ENTER</span><span class="ctrl-desc">iniciar / reiniciar a música</span></div>
+  </div>
+  <div class="section" style="margin-top:12px">
+    <div class="section-title">FEATURES</div>
+    <div class="tags">
+      <span class="tag tag-cyan">BPM ajustável</span>
+      <span class="tag tag-cyan">velocidade das notas</span>
+      <span class="tag tag-cyan">densidade customizável</span>
+      <span class="tag tag-purple">sprites com chroma key</span>
+      <span class="tag tag-purple">personagem animado</span>
+      <span class="tag tag-yellow">sistema de combo</span>
+      <span class="tag tag-yellow">barra de HP</span>
+      <span class="tag tag-yellow">PERFECT / GOOD / MISS</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+""", height=900, scrolling=True)
